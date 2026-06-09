@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Body Atlas</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* GLOBAL TYPOGRAPHY SYSTEM */
+:root {
+    --base-font: 16px;
+}
+
+body {
+    font-family: Poppins, sans-serif;
+    font-size: var(--base-font);
+    line-height: 1.5;
+
+    min-height: 200vh;
+    padding-top: 120px;
+
+    background: linear-gradient(135deg, #c2e9fb, #a1c4fd, #d4fc79);
+    background-attachment: fixed;
+
+    overflow-x: hidden;
+}
+
+/* DARK MODE */
+body[data-theme="dark"] {
+    background: linear-gradient(135deg,#0f172a,#0b1220,#050814);
+    color: white;
+}
+
+/* HEADINGS CONSISTENT */
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+p {
+    font-size: 1rem;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 120px;
+
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 30px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.navbar.shrink {
+    height: 80px;
+    padding: 0 25px;
+}
+
+.logo-img {
+    width: 170px;
+    transition: 0.3s;
+}
+
+.logo-img.shrink-logo {
+    width: 110px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-buttons a {
+    text-decoration: none;
+}
+
+.nav-buttons button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: rgba(0,0,0,0.4);
+    color: white;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.nav-buttons button.active {
+    background: white;
+    color: black;
+}
+
+/* CONTENT */
+.content {
+    text-align: center;
+    margin-top: 120px;
+}
+
+.welcome {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.subtext {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <img src="logo.png" class="logo-img" alt="logo">
+
+    <div class="nav-buttons">
+        <a href="index.html"><button data-page="home">Home</button></a>
+        <a href="purpose.html"><button data-page="purpose">Purpose</button></a>
+        <a href="creator.html"><button data-page="creator">Coder</button></a>
+        <a href="settings.html"><button data-page="settings">Settings</button></a>
+    </div>
+
+</div>
+
+<div class="content">
+    <div class="welcome">Welcome to Body Atlas</div>
+    <div class="subtext">Explore the human body in an interactive way</div>
+
+    <div style="height: 1200px;"></div>
+</div>
+
+<script>
+/* SHRINK NAVBAR */
+window.addEventListener("scroll", () => {
+    const navbar = document.querySelector(".navbar");
+    const logo = document.querySelector(".logo-img");
+
+    if (window.scrollY > 50) {
+        navbar.classList.add("shrink");
+        logo.classList.add("shrink-logo");
+    } else {
+        navbar.classList.remove("shrink");
+        logo.classList.remove("shrink-logo");
+    }
+});
+
+/* ACTIVE PAGE */
+const file = location.pathname.split("/").pop().toLowerCase();
+
+document.querySelectorAll("button[data-page]").forEach(btn => {
+    const page = btn.dataset.page;
+
+    if (
+        (file.includes("index") && page === "home") ||
+        (file.includes("purpose") && page === "purpose") ||
+        (file.includes("creator") && page === "creator") ||
+        (file.includes("settings") && page === "settings")
+    ) {
+        btn.classList.add("active");
+    }
+});
+</script>
+
+</body>
+</html>

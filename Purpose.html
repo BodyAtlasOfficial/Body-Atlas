@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Purpose</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Poppins, sans-serif;
+    min-height: 150vh;
+    padding-top: 120px;
+    background: linear-gradient(135deg, #c2e9fb, #a1c4fd, #d4fc79);
+    background-attachment: fixed;
+}
+
+/* NAVBAR */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 120px;
+
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 30px;
+    z-index: 1000;
+
+    transition: all 0.3s ease;
+}
+
+.navbar.shrink {
+    height: 80px;
+    padding: 0 25px;
+}
+
+.logo-img {
+    width: 170px;
+    height: auto;
+    transition: all 0.3s ease;
+}
+
+.logo-img.shrink-logo {
+    width: 110px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 20px; /* FIXED spacing */
+    align-items: center;
+}
+
+.nav-buttons a {
+    text-decoration: none;
+}
+
+.nav-buttons button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: rgba(0,0,0,0.4);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.nav-buttons button.active {
+    background: white;
+    color: black;
+    font-weight: 600;
+    transform: scale(1.05);
+}
+
+/* CONTENT */
+.content {
+    text-align: center;
+    margin-top: 120px;
+}
+
+h1 {
+    font-size: 60px;
+}
+
+p {
+    font-size: 20px;
+    width: 60%;
+    margin: 20px auto;
+    line-height: 1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <div class="logo">
+        <img src="logo.png" class="logo-img">
+    </div>
+
+    <div class="nav-buttons">
+        <a href="index.html"><button data-page="home">Home</button></a>
+        <a href="purpose.html"><button data-page="purpose">Purpose</button></a>
+        <a href="creator.html"><button data-page="creator">Coder</button></a>
+        <a href="settings.html"><button data-page="settings">Settings</button></a>
+    </div>
+
+</div>
+
+<div class="content">
+    <h1>Purpose</h1>
+    <p>
+        Body Atlas is designed to help users explore the human body in a simple, visual, and interactive way.
+    </p>
+</div>
+
+<script>
+window.addEventListener("scroll", function () {
+    const navbar = document.querySelector(".navbar");
+    const logo = document.querySelector(".logo-img");
+
+    if (window.scrollY > 50) {
+        navbar.classList.add("shrink");
+        logo.classList.add("shrink-logo");
+    } else {
+        navbar.classList.remove("shrink");
+        logo.classList.remove("shrink-logo");
+    }
+});
+
+const file = window.location.pathname.split("/").pop().toLowerCase();
+document.querySelectorAll(".nav-buttons button").forEach(btn => {
+    const page = btn.getAttribute("data-page");
+
+    if (
+        (file.includes("index") && page === "home") ||
+        (file.includes("purpose") && page === "purpose") ||
+        (file.includes("creator") && page === "creator")
+        (file.includes("settings") && page === "settings")
+    ) {
+        btn.classList.add("active");
+    }
+});
+(function applyStoredSettings(){
+  const storedTheme = localStorage.getItem('theme') || 'system';
+  if(storedTheme && storedTheme !== 'system') document.documentElement.setAttribute('data-theme', storedTheme);
+  else document.documentElement.removeAttribute('data-theme');
+
+  const storedScale = parseFloat(localStorage.getItem('textScale')) || 1;
+  document.documentElement.style.setProperty('--ui-text-scale', String(storedScale));
+})();
+</script>
+
+</body>
+</html>
